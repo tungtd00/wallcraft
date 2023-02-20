@@ -13,12 +13,16 @@ class exclusive_tab extends StatefulWidget {
 class _exclusive_tabState extends State<exclusive_tab> with AutomaticKeepAliveClientMixin{
   gridview (AsyncSnapshot<Iterable<photo>> snapshot){
     return Padding(
-      padding: EdgeInsets.all(5),
-      child: GridView.count(
-          crossAxisCount: 2,
+
+      padding: EdgeInsets.all(0),
+      child: GridView(
+
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 200,
           childAspectRatio: 1,
-          mainAxisSpacing: 4,
-          crossAxisSpacing: 4,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+          ),
         children: snapshot.data!.map((photo){
           return GestureDetector(
             child:GridTile(

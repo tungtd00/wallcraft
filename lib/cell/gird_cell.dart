@@ -9,14 +9,7 @@ class PhotoCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10)
-      ),
-      color: Colors.white,
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: Container(
+    return Container(
           alignment: Alignment.center,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,19 +23,13 @@ class PhotoCell extends StatelessWidget {
                       child: FadeInImage.assetNetwork(
                         placeholder :'assets/images/no_image.jpg',
                         image: photos.thumbnailUrl.toString(),
-                        width: 100,
-                        height: 100,
+
                       ),
                     ),
-
-
               ))
             ],
+          )
+          );
 
-
-          ),
-        ),
-      ),
-    );
   }
 }

@@ -7,8 +7,16 @@ class tab_24h extends StatefulWidget {
 }
 
 class _tab_24hState extends State<tab_24h> with AutomaticKeepAliveClientMixin{
+
+
+
   @override
   Widget build(BuildContext context) {
+    var list_img = [];
+    for(var i=1;i<=21;i++){
+      String str = 'assets/img_home/anh$i.jpg';
+        list_img.add(str);
+    }
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -19,13 +27,14 @@ class _tab_24hState extends State<tab_24h> with AutomaticKeepAliveClientMixin{
             crossAxisSpacing: 5,
             mainAxisSpacing: 5,
           ),
-          children: [
-            for(var i=1;i<21;i++)
-              Image.asset(
-                'assets/img_home/anh$i.jpg',
-                fit: BoxFit.cover,
-              )
-          ],
+
+          // children: [
+          //   for(var i=1;i<21;i++)
+          //     Image.asset(
+          //       'assets/img_home/anh$i.jpg',
+          //       fit: BoxFit.cover,
+          //     )
+          // ],
         )
       ),
     );

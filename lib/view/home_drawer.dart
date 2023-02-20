@@ -67,26 +67,7 @@ class _homeState extends State<home> with TickerProviderStateMixin{
     _tabController.addListener(() {
       int i = _tabController.index;
         context.read<indexSort>().swichtab(i);
-      // setState((){
-      //   switch (context.watch<indexSort>().Indextab) {
-      //     case 0:
-      //       PrimaryColor= Color(0xffff5722);
-      //       break;
-      //     case 1:
-      //       PrimaryColor= Color(0xff3f51b5);
-      //       break;
-      //     case 2:
-      //       PrimaryColor= Color(0xffe91e63);
-      //       break;
-      //     case 3:
-      //       PrimaryColor= Color(0xff9c27b0);
-      //       break;
-      //     case 4:
-      //       PrimaryColor= Color(0xff2196f3);
-      //       break;
-      //     default:
-      //   }
-      // });
+
     });
 
 
