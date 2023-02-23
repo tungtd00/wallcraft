@@ -11,10 +11,9 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-      ChangeNotifierProvider(create: (_) => changePage()),
+        ChangeNotifierProvider(create: (_) => changePage()),
       ],
       child: MyApp(),
-
     ),
   );
 }
@@ -24,13 +23,9 @@ final pages = [
   wallpaper_change_drawer(),
   favourite_drawer(),
   history_drawer(),
-  // 'basic_subscription_drawer'
-  // 'artist_drawer'
-  // 'settings_drawer'
-  // 'support_drawer'
-  // 'our_tiktok'
 ];
 final titlePage = ['Home', 'Wallpaper change', 'Favourite', 'History'];
+
 class changePage extends ChangeNotifier {
   int _indexPage = 0;
 
@@ -41,6 +36,7 @@ class changePage extends ChangeNotifier {
     notifyListeners();
   }
 }
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override

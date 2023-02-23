@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class tab_24h extends StatefulWidget {
   const tab_24h({Key? key}) : super(key: key);
 
@@ -6,37 +7,33 @@ class tab_24h extends StatefulWidget {
   State<tab_24h> createState() => _tab_24hState();
 }
 
-class _tab_24hState extends State<tab_24h> with AutomaticKeepAliveClientMixin{
-
-
-
+class _tab_24hState extends State<tab_24h> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     var list_img = [];
-    for(var i=1;i<=21;i++){
+    for (var i = 1; i <= 21; i++) {
       String str = 'assets/img_home/anh$i.jpg';
-        list_img.add(str);
+      list_img.add(str);
     }
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: GridView(
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 150,
-            childAspectRatio: 0.5,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5,
-          ),
+          body: GridView(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 150,
+          childAspectRatio: 0.5,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+        ),
 
-          // children: [
-          //   for(var i=1;i<21;i++)
-          //     Image.asset(
-          //       'assets/img_home/anh$i.jpg',
-          //       fit: BoxFit.cover,
-          //     )
-          // ],
-        )
-      ),
+        // children: [
+        //   for(var i=1;i<21;i++)
+        //     Image.asset(
+        //       'assets/img_home/anh$i.jpg',
+        //       fit: BoxFit.cover,
+        //     )
+        // ],
+      )),
     );
   }
 

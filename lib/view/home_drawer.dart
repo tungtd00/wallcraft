@@ -12,14 +12,10 @@ class home_drawer extends StatefulWidget {
   @override
   State<home_drawer> createState() => _home_drawerState();
 }
-Color PrimaryColor =  Color(0xff109618);
 
-final tabs_name = [
-  'HOME',
-  'AI ARTIST',
-  'EXCLUSIVE',
-  'VIDEO',
-  '24H'];
+Color PrimaryColor = Color(0xff109618);
+
+final tabs_name = ['HOME', 'AI ARTIST', 'EXCLUSIVE', 'VIDEO', '24H'];
 final page_tab = [
   home_tab(),
   AI_artist_tab(),
@@ -30,27 +26,23 @@ final page_tab = [
 
 class _home_drawerState extends State<home_drawer>
     with TickerProviderStateMixin {
-
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => indexSort() ),
+        ChangeNotifierProvider(create: (_) => indexSort()),
       ],
       child: home(),
     );
   }
 }
-
 class indexSort extends ChangeNotifier {
-  int _indextab =0;
-  void swichtab(int index){
+  int _indextab = 0;
+  void swichtab(int index) {
     _indextab = index;
     print("index : $_indextab");
   }
   int get Indextab => _indextab;
-
 }
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
@@ -58,51 +50,36 @@ class home extends StatefulWidget {
   @override
   State<home> createState() => _homeState();
 }
-
-class _homeState extends State<home> with TickerProviderStateMixin{
-
+class _homeState extends State<home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: tabs_name.length, vsync: this);
+    TabController _tabController =
+        TabController(length: tabs_name.length, vsync: this);
     _tabController.addListener(() {
       int i = _tabController.index;
-        context.read<indexSort>().swichtab(i);
-
+      context.read<indexSort>().swichtab(i);
     });
-
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'HOME',
-      home: DefaultTabController(
-          length: tabs_name.length,
-          child: Scaffold(
-
-              backgroundColor: PrimaryColor,
-              appBar:TabBar(
+    return DefaultTabController(
+        length: tabs_name.length,
+        child: Scaffold(
+            backgroundColor: PrimaryColor,
+            appBar: TabBar(
+              controller: _tabController,
+              labelColor: Colors.white,
+              indicatorColor: Colors.amber,
+              isScrollable: true,
+              tabs: [
+                for (final tab in tabs_name) Tab(text: tab),
+              ],
+            ),
+            body: Container(
+              color: Colors.white,
+              child: TabBarView(
                 controller: _tabController,
-                labelColor: Colors.white,
-                indicatorColor: Colors.amber,
-                isScrollable: true,
-                tabs: [
-                  for (final tab in tabs_name) Tab(text: tab),
+                children: [
+                  for (final tab in page_tab) tab,
                 ],
-               
               ),
-              body:
-                  Container(
-                    color: Colors.white,
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        for (final tab in page_tab)
-                          tab,
-                      ],
-                    ),
-
-                  )
-          )),
-    );;
+            )));
   }
 }
-

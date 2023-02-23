@@ -10,26 +10,23 @@ class PhotoCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-          alignment: Alignment.center,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                  child: ClipRect(
-                    child: Hero(
-                      tag: "Photo${photos.id}", 
-                      child: FadeInImage.assetNetwork(
-                        placeholder :'assets/images/no_image.jpg',
-                        image: photos.thumbnailUrl.toString(),
-
-                      ),
-                    ),
-              ))
-            ],
-          )
-          );
-
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+                child: ClipRect(
+              child: Hero(
+                tag: "Photo${photos.id}",
+                child: FadeInImage.assetNetwork(
+                  placeholder: 'assets/images/no_image.jpg',
+                  image: photos.thumbnailUrl.toString(),
+                ),
+              ),
+            ))
+          ],
+        ));
   }
 }

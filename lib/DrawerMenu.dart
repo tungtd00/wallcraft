@@ -48,6 +48,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             title: Text(
               'Home',
               style: TextStyle(
+
                 color: context.watch<changePage>().IndexPage == 0
                     ? Colors.blue
                     : Colors.black87,
