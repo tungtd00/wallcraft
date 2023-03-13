@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
-class FullScreen extends StatefulWidget {
-  int index;
+import '../../model/imageAPI.dart';
+import '../fullScreen.dart';
 
-  FullScreen({super.key, required this.index});
+class Full extends StatefulWidget {
+  imageApi? imgApi;
+
+  Full({super.key, required this.imgApi});
 
   @override
-  State<FullScreen> createState() => _FullScreenState();
+  State<Full> createState() => _FullState();
 }
 
-bool checkFavourite = false;
-
-class _FullScreenState extends State<FullScreen> {
+class _FullState extends State<Full> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,14 +23,13 @@ class _FullScreenState extends State<FullScreen> {
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(
-                        'assets/img_home/anh${widget.index + 1}.jpg'),
-                    fit: BoxFit.cover)),
+              image: NetworkImage(widget.imgApi!.urls!.raw.toString()),
+            )),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: IconButton(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.center,
               color: Colors.white,
               icon: Icon(
                 Icons.close,

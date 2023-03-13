@@ -38,6 +38,7 @@ class _exclusive_tabState extends State<exclusive_tab>
   }
 
   gotoDetailsPage(BuildContext context, photo photos) {}
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -63,22 +64,6 @@ class _exclusive_tabState extends State<exclusive_tab>
                     }))
           ],
         ),
-        // body: GridView(
-        //   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        //     maxCrossAxisExtent: 150,
-        //     childAspectRatio: 0.5,
-        //     crossAxisSpacing: 5,
-        //     mainAxisSpacing: 5,
-        //   ),
-        //   children: [
-        //     for(var i=1;i<21;i++)
-        //       Image.asset(
-        //         'assets/img_home/anh$i.jpg',
-        //         fit: BoxFit.cover,
-        //       )
-        //
-        //   ],
-        // )
       ),
     );
   }

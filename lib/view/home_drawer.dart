@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wallcraft/view/tabLayout/home_tab.dart';
+
 import 'tabLayout/24h_tab.dart';
 import 'tabLayout/artist_tab.dart';
 import 'tabLayout/exclusive_tab.dart';
@@ -36,20 +37,25 @@ class _home_drawerState extends State<home_drawer>
     );
   }
 }
+
 class indexSort extends ChangeNotifier {
   int _indextab = 0;
+
   void swichtab(int index) {
     _indextab = index;
     print("index : $_indextab");
   }
+
   int get Indextab => _indextab;
 }
+
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
 
   @override
   State<home> createState() => _homeState();
 }
+
 class _homeState extends State<home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {

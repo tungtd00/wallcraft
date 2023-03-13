@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'main.dart';
 
 class DrawerMenu extends StatefulWidget {
-  const DrawerMenu({Key? key}) : super(key: key);
+  const DrawerMenu(int index, {Key? key}) : super(key: key);
 
   @override
   State<DrawerMenu> createState() => _DrawerMenuState();
@@ -48,7 +48,6 @@ class _DrawerMenuState extends State<DrawerMenu> {
             title: Text(
               'Home',
               style: TextStyle(
-
                 color: context.watch<changePage>().IndexPage == 0
                     ? Colors.blue
                     : Colors.black87,

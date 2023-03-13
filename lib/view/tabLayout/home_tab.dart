@@ -1,9 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:wallcraft/model/photo.dart';
 import 'package:wallcraft/view/fullScreen.dart';
-import 'package:wallcraft/view/home_drawer.dart';
 
 class home_tab extends StatefulWidget {
   const home_tab({Key? key}) : super(key: key);
@@ -26,7 +22,7 @@ class _home_tabState extends State<home_tab>
     }
 
     return GridView.builder(
-      padding: EdgeInsets.only(top: 5),
+      padding: EdgeInsets.all(8),
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 150,
         childAspectRatio: 9 / 16,

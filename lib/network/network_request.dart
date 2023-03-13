@@ -1,12 +1,14 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 import '../model/photo.dart';
-import 'package:http/http.dart' as http;
 
 class NetworkRequest {
   static const uri = 'https://jsonplaceholder.typicode.com/photos';
   static var url = Uri.parse(uri);
+
   static Iterable<photo> prasePhotos(String reponseBody) {
     var list = json.decode(reponseBody) as List<dynamic>;
     Iterable<photo> photos =
