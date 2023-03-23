@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wallcraft/database/userDb.dart';
 import 'package:wallcraft/model/users.dart';
 import 'package:wallcraft/valid/validUser.dart';
+import 'package:wallcraft/view/dialog/loading_dialog.dart';
+import 'package:wallcraft/view/dialog/msg_dialog.dart';
 
 import '../main.dart';
 
@@ -25,7 +28,7 @@ class AuthProvider extends ChangeNotifier {
 
   String get phone => _phone;
   ValidUser validUser = ValidUser();
-  User? _user = User();
+  User? _user = null;
 
   User? get user => _user;
 
@@ -48,7 +51,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  bool isValidSignUp(String name, String phone, String email, String pass) {
+  Future<bool> isValidSignUp(BuildContext context,String name, String phone, String email, String pass) async {
     if (validUser.isValidName(name)) {
       _name = "";
       notifyListeners();
@@ -58,15 +61,21 @@ class AuthProvider extends ChangeNotifier {
         if (validUser.isValidEmail(email)) {
           _errorEmailSignUp = "";
           notifyListeners();
-          if (validUser.isValidPass(pass)) {
-            _errorPassSignUp = "";
-            notifyListeners();
-            return true;
-          } else {
-            _errorPassSignUp = "mật khẩu ít nhất có 6 kí tự";
-            notifyListeners();
+          if( ! await context.read<AuthProvider>().isEmailExist(email)){
+            if (validUser.isValidPass(pass)) {
+              _errorPassSignUp = "";
+              notifyListeners();
+              return true;
+            } else {
+              _errorPassSignUp = "mật khẩu ít nhất có 6 kí tự";
+              notifyListeners();
+              return false;
+            }
+           }
+          else{
             return false;
           }
+
         } else {
           _errorEmailSignUp = "email có dạng abc@gmail.com";
           notifyListeners();
@@ -85,57 +94,72 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  addUser(BuildContext context, User user) async {
+  Future<void> addUser(BuildContext context, User user) async {
     UserDb userDb = UserDb();
     await userDb.addUser(user);
-    loginProvider(context, user.email.toString(), user.password.toString());
+    await loginProvider(context, user.email.toString(), user.password.toString());
   }
-  loginProvider(BuildContext context, String email, String pass) async {
+  Future<void> loginProvider(BuildContext context, String email, String pass) async {
     UserDb userDb = UserDb();
     print("cbi lấy user email pass");
     List<User> users = await userDb.login(email, pass);
-    print("list user ${users.length}");
-    if (users != Null) {
-      print("users ko null : ${users.first.email}");
+    print("list user khi kiểm tra email pass để đăng nhập : ${users.length}");
+    if (users.length != 0) {
+      LoadingDialog.showLoadingDialog(context, "Đăng nhập thành công");
+      print("users kiểm tra ko null : ${users.first.email}");
       _user = users.first;
+      print("user được gán sau khi pass đăng nhập");
+
       notifyListeners();
-      Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
     } else {
-      _user = null;
-      notifyListeners();
+      String msg = "sai email or password";
+      MsgDialog.showMsgDialog(context, "Lỗi đăng nhập", msg);
+      print("sai email or password");
     }
   }
 
-  upDateUser(User user) {
-    UserDb().upDateUser(user);
+  updateUser(User user) {
+    // UserDb().upDateUser(user);
     _user = null;
+    notifyListeners();
+    print("_user gán : ${_user.toString()}");
+  }
+  updateStateUser(User user){
+    _user = user;
+    notifyListeners();
   }
 
   Future<bool> isEmailExist(String email) async {
+    print("kiểm tra");
     UserDb userDb = UserDb();
     List<User> user = await userDb.getUserByEmail(email);
-    if (user != null) {
-      _errorEmailSignUp = "Email đã tồn tại";
-      notifyListeners();
-      return true;
-    } else {
+    print("email kiểm tra : ${user.toString()}");
+    if (user.length == 0) {
+      print("email rỗng ${user.toString()}");
+
       _errorEmailSignUp = "";
       notifyListeners();
       return false;
+
+    } else {
+      print("email tồn tại ${user.length}");
+      _errorEmailSignUp = "Email đã tồn tại";
+      notifyListeners();
+      return true;
     }
   }
 
   Future<User?> isLogin() async {
     UserDb userDb = UserDb();
     List<User> user = await userDb.isLogin();
-    for (User u in user) {
-      print("aaa : ${u}");
-    }
+
     if (user != null) {
       _user = user.first;
       notifyListeners();
       return user.first;
     } else {
+      print("user gán cho null");
       _user = null;
       notifyListeners();
       return null;

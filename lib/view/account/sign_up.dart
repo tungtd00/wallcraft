@@ -171,9 +171,8 @@ class _SignUpState extends State<SignUp> {
                             email: email,
                             password: pass,
                             isLogin: 1);
-                        if (await authViewModel.checkSignUpValid(
-                            context, name, phone, email, pass)) {
-                          authViewModel.signupViewModel(context, user);
+                        if (await authViewModel.checkSignUpValid(context, name, phone, email, pass)) {
+                          await authViewModel.signupViewModel(context, user);
                         }
                       },
                       child: Text("Đăng kí"),

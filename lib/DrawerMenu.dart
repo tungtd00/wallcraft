@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wallcraft/provider/auth_provider.dart';
+import 'package:wallcraft/view/dialog/msg_dialog.dart';
 
 import 'main.dart';
+import 'model/users.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu(int index, {Key? key}) : super(key: key);
@@ -13,6 +16,8 @@ class DrawerMenu extends StatefulWidget {
 class _DrawerMenuState extends State<DrawerMenu> {
   @override
   Widget build(BuildContext context) {
+    User? user = context.watch<AuthProvider>().user;
+
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -106,11 +111,15 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   : Colors.black87,
             ),
             onTap: () {
-              selectDestination(2);
-              setState(() {
-                //indexClicked = 2;
-                Navigator.pop(context);
-              });
+               if(user !=null){
+                 selectDestination(2);
+                   //indexClicked = 2;
+                   Navigator.pop(context);
+               }
+               else{
+                 Navigator.pop(context);
+                 MsgDialog.showDialogLogin(context);
+               }
             },
           ),
           ListTile(

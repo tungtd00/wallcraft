@@ -1,13 +1,19 @@
 class FavouriteImg {
   String? src;
-  bool isFavourite = false;
+  int? userId;
 
-  FavouriteImg(this.src, this.isFavourite);
+  FavouriteImg({this.src, this.userId});
+
+
+  @override
+  String toString() {
+    return 'FavouriteImg{src: $src, userId: $userId}';
+  }
 
   Map<String, dynamic> toMap() {
     return ({
-      "scr": src,
-      "isfav": isFavourite,
+      "src": src,
+      "userId":userId,
     });
   }
 }

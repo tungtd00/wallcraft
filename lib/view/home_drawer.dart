@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wallcraft/provider/auth_provider.dart';
 import 'package:wallcraft/view/tabLayout/home_tab.dart';
 
 import 'tabLayout/24h_tab.dart';
@@ -29,25 +30,10 @@ class _home_drawerState extends State<home_drawer>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => indexSort()),
-      ],
-      child: home(),
-    );
+    return home();
   }
 }
 
-class indexSort extends ChangeNotifier {
-  int _indextab = 0;
-
-  void swichtab(int index) {
-    _indextab = index;
-    print("index : $_indextab");
-  }
-
-  int get Indextab => _indextab;
-}
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
@@ -61,10 +47,10 @@ class _homeState extends State<home> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     TabController _tabController =
         TabController(length: tabs_name.length, vsync: this);
-    _tabController.addListener(() {
-      int i = _tabController.index;
-      context.read<indexSort>().swichtab(i);
-    });
+    // _tabController.addListener(() {
+    //   int i = _tabController.index;
+    //   context.read<indexSort>().swichtab(i);
+    // });
     return DefaultTabController(
         length: tabs_name.length,
         child: Scaffold(

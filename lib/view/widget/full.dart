@@ -15,6 +15,7 @@ class Full extends StatefulWidget {
 class _FullState extends State<Full> {
   @override
   Widget build(BuildContext context) {
+   bool checkFavourite = false;
     return Scaffold(
       body: Stack(
         children: [

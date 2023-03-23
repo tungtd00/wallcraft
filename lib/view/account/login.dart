@@ -142,8 +142,8 @@ class _LoginState extends State<Login> {
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      AuthViewModel().checkLoginValid(
+                    onPressed: () async {
+                      await AuthViewModel().checkLoginValid(
                           context,
                           _email_controller.text.toString(),
                           _pass_controller.text.toString());

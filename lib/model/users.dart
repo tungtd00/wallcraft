@@ -6,6 +6,11 @@ class User {
   String? password;
   int? isLogin;
 
+  @override
+  String toString() {
+    return 'User{id: $id, name: $name, phone: $phone, email: $email, password: $password, isLogin: $isLogin}';
+  }
+
   User(
       {this.name,
       this.phone,
@@ -37,7 +42,7 @@ class User {
   }
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'] as int,
+      id: json['id'] ,
       name: json['name'] as String,
       phone: json['phone'] as String,
       email: json['email'] as String,

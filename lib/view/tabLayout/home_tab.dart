@@ -37,7 +37,9 @@ class _home_tabState extends State<home_tab>
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => FullScreen(index: index)));
+                    builder: (context) => FullScreen(),
+                    settings: RouteSettings(arguments: index),
+                ));
           },
           child: Hero(
             tag: list_img[index],

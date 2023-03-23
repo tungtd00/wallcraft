@@ -44,9 +44,8 @@ class DetailUser extends StatelessWidget {
                       password: user.password,
                       isLogin: 0);
                   UserDb userDb = UserDb();
-                  await context.read<AuthProvider>().upDateUser(user);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyApp()));
+                  await context.read<AuthProvider>().updateUser(user);
+                  Navigator.pop(context);
                 },
                 child: Text("Logout")),
           )

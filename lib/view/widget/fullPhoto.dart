@@ -1,50 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wallcraft/model/users.dart';
-import 'package:wallcraft/provider/auth_provider.dart';
-import 'package:wallcraft/provider/favourite_provider.dart';
+import 'package:wallcraft/model/photo.dart';
 
-class FullScreen extends StatefulWidget {
+import '../../model/users.dart';
+import '../../provider/auth_provider.dart';
+import '../../provider/favourite_provider.dart';
+class FullPhoto extends StatefulWidget {
+  photo photos ;
+
+  FullPhoto({required this.photos});
 
   @override
-  State<FullScreen> createState() => _FullScreenState();
+  State<FullPhoto> createState() => _FullPhotoState();
 }
 
-
-
-class _FullScreenState extends State<FullScreen> {
-  int? index;
-  String? src;
+class _FullPhotoState extends State<FullPhoto> {
   bool isFavourite = false;
-  User? user;
-  @override
-  void initState() {
-
-    // TODO: implement initState
-    super.initState();
-
-  }
-
-   Future<void> _checkFavourite(String src, User user)async {
+  Future<void> _checkFavourite(String src, User user)async {
     print("check cscscsacascascsaca");
-     if(user != null){
-       print("user có");
-       int? id = user.id;
-       await context.read<FavouriteProvider>().checkFavourite(src, id!);
-       print("isFavourite là : ${isFavourite}");
-     }
-     else{
-       print("user null");
-       isFavourite =false;
-     }
+    if(user != null){
+      print("user có");
+      int? id = user.id;
+      await context.read<FavouriteProvider>().checkFavourite(src, id!);
+      print("isFavourite là : ${isFavourite}");
+    }
+    else{
+      print("user null");
+      isFavourite =false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    int index = ModalRoute.of(context)?.settings.arguments as int;
     User? user = context.watch<AuthProvider>().user;
-    String src ='assets/img_home/anh${index+1}.jpg';
-
     return Scaffold(
       body: Stack(
         children: [
@@ -53,14 +41,13 @@ class _FullScreenState extends State<FullScreen> {
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(
-                        'assets/img_home/anh${index+ 1}.jpg'),
-                    fit: BoxFit.cover)),
+                  image: NetworkImage(widget.photos.url.toString()),
+                )),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: IconButton(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.center,
               color: Colors.white,
               icon: Icon(
                 Icons.close,
@@ -91,7 +78,7 @@ class _FullScreenState extends State<FullScreen> {
                 ),
                 user != null ?
                 FutureBuilder(
-                    future: _checkFavourite(src, user),
+                    future: _checkFavourite(widget.photos.url.toString(), user),
                     builder: (context,snapshot){
                       isFavourite = context.watch<FavouriteProvider>().boolFavourite!;
                       print("isFavourite là : ${isFavourite}");
@@ -107,11 +94,11 @@ class _FullScreenState extends State<FullScreen> {
                                 if(user != null){
                                   if(isFavourite){
                                     print("xóa vào yt");
-                                   await context.read<FavouriteProvider>().removeFavourite(src, user.id!);
+                                    await context.read<FavouriteProvider>().removeFavourite(widget.photos.url.toString(), user.id!);
                                   }
                                   else{
                                     print("thêm là yt");
-                                   await context.read<FavouriteProvider>().addFavourite(src, user.id!);
+                                    await context.read<FavouriteProvider>().addFavourite(widget.photos.url.toString(), user.id!);
                                   }
                                 }
                               },
@@ -130,16 +117,16 @@ class _FullScreenState extends State<FullScreen> {
                 )
                     :
                 Container(
-                decoration: BoxDecoration(
-                color: Colors.white60,
-                borderRadius: BorderRadius.circular(50),
-                ),
-                margin: EdgeInsets.all(8),
-                child: IconButton(
-                  onPressed: () {
+                  decoration: BoxDecoration(
+                    color: Colors.white60,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  margin: EdgeInsets.all(8),
+                  child: IconButton(
+                    onPressed: () {
 
-                  }, icon: Icon(Icons.favorite_border_outlined),
-                ),
+                    }, icon: Icon(Icons.favorite_border_outlined),
+                  ),
                 ),
               ],
             ),
@@ -148,6 +135,4 @@ class _FullScreenState extends State<FullScreen> {
       ),
     );
   }
-
-
 }

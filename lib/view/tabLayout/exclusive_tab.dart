@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wallcraft/cell/gird_cell.dart';
 import 'package:wallcraft/network/network_request.dart';
+import 'package:wallcraft/view/widget/fullPhoto.dart';
 
 import '../../model/photo.dart';
+import '../widget/full.dart';
 
 class exclusive_tab extends StatefulWidget {
   const exclusive_tab({Key? key}) : super(key: key);
@@ -37,7 +39,7 @@ class _exclusive_tabState extends State<exclusive_tab>
     );
   }
 
-  gotoDetailsPage(BuildContext context, photo photos) {}
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +68,10 @@ class _exclusive_tabState extends State<exclusive_tab>
         ),
       ),
     );
+  }
+  void gotoDetailsPage(BuildContext context, photo pt) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => FullPhoto(photos: pt)));
   }
 
   @override

@@ -93,6 +93,7 @@ class UserDb {
   }
 
   Future<dynamic> getUserByEmail(String email) async {
+    print("truy vấn email");
     final db = await database;
     final result = await db
         ?.query(tableUsers, where: "${columnEmail} = ?", whereArgs: [email]);
