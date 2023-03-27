@@ -1,13 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wallcraft/database/userDb.dart';
 import 'package:wallcraft/model/users.dart';
 import 'package:wallcraft/valid/validUser.dart';
 import 'package:wallcraft/view/dialog/loading_dialog.dart';
 import 'package:wallcraft/view/dialog/msg_dialog.dart';
-
 import '../main.dart';
-
 class AuthProvider extends ChangeNotifier {
   String _errorEmailLogin = "";
   String _errorPassLogin = "";
@@ -108,6 +109,7 @@ class AuthProvider extends ChangeNotifier {
       LoadingDialog.showLoadingDialog(context, "Đăng nhập thành công");
       print("users kiểm tra ko null : ${users.first.email}");
       _user = users.first;
+      await _saveUserToSharedPreferences(_user);
       print("user được gán sau khi pass đăng nhập");
 
       notifyListeners();
@@ -119,14 +121,23 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  updateUser(User user) {
+  logoutUser(User user) async {
     // UserDb().upDateUser(user);
     _user = null;
+    await _saveUserToSharedPreferences(_user);
     notifyListeners();
     print("_user gán : ${_user.toString()}");
   }
-  updateStateUser(User user){
+  Future<void> _saveUserToSharedPreferences(User? user)async {
+    print("tiến hành lưu trạng thái đăng nhập");
+    final prefs = await SharedPreferences.getInstance();
+    final userJson = json.encode(user?.toJson());
+    print("encode user  :${userJson.toString()} " );
+    await prefs.setString('user', userJson);
+  }
+  updateStateUser(User user) async {
     _user = user;
+     _saveUserToSharedPreferences(_user);
     notifyListeners();
   }
 
@@ -156,11 +167,13 @@ class AuthProvider extends ChangeNotifier {
 
     if (user != null) {
       _user = user.first;
+      await _saveUserToSharedPreferences(_user);
       notifyListeners();
       return user.first;
     } else {
       print("user gán cho null");
       _user = null;
+      await _saveUserToSharedPreferences(_user);
       notifyListeners();
       return null;
     }

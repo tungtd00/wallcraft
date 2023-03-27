@@ -7,8 +7,6 @@ import 'package:wallcraft/model/users.dart';
 
 class FavouriteProvider extends ChangeNotifier{
   bool? _boolFavourite;
-
-
   bool? get boolFavourite => _boolFavourite;
 
   Future<bool> checkFavourite(String src,int userId ) async {

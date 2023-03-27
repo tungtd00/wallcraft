@@ -44,7 +44,7 @@ class DetailUser extends StatelessWidget {
                       password: user.password,
                       isLogin: 0);
                   UserDb userDb = UserDb();
-                  await context.read<AuthProvider>().updateUser(user);
+                  await context.read<AuthProvider>().logoutUser(user);
                   Navigator.pop(context);
                 },
                 child: Text("Logout")),

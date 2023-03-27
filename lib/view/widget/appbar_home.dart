@@ -19,22 +19,21 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget{
 }
 class _AppBarHomeState extends State<AppBarHome> {
   // bool checkInit = false;
-  User? user = null;
-  // late Future<void> _myFuture;
+  User? user ;
+  late Future<void> _myFuture;
   @override
   initState()   {
     super.initState();
     print("initState buil lại");
-    // checkInit = true;
-    // _myFuture =  _getUserFromSharedPreferences();
+    _getUserFromSharedPreferences().then((value) {
+      if(value != null){
+        context.read<AuthProvider>().updateStateUser(value);
+      }
+    });
+    // checkInit = true
+
   }
-  Future<void> _saveUserToSharedPreferences(User? user)async {
-    print("tiến hành lưu trạng thái đăng nhập");
-    final prefs = await SharedPreferences.getInstance();
-    final userJson = json.encode(user?.toJson());
-    print("encode user  :${userJson.toString()} " );
-    await prefs.setString('user', userJson);
-  }
+
   Future<User?> _getUserFromSharedPreferences()async{
     print("getusser");
     final prefs = await SharedPreferences.getInstance();
@@ -52,8 +51,11 @@ class _AppBarHomeState extends State<AppBarHome> {
   }
   @override
   Widget build(BuildContext context) {
+
     int index = context.watch<changePage>().IndexPage;
     user = context.watch<AuthProvider>().user;
+    print("user : ${user.toString()}");
+    print("user name : ${user?.name}");
     return AppBar(
       backgroundColor: Colors.black,
       actions: [

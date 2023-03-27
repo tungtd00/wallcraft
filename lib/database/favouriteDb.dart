@@ -32,7 +32,7 @@ class FavouriteDb {
   }
   Future<void> removeFauvorite(FavouriteImg img)async {
     final db = await database;
-    db?.delete("favourite",where:'userId = ?',whereArgs: [img.userId]  );
+    db?.delete("favourite",where:'userId = ? AND src =? ',whereArgs: [img.userId,img.src]  );
 
   }
   Future<dynamic>getFavouriteBySrcAndUserId(String src, int userId) async {
